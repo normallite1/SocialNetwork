@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="">
+
+<body>
+<div th:fragment="head" >
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid mx-1">
+      <a class="navbar-brand" href="/">Social</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mb-2">
+          <li class="nav-item">
+            <div  sec:authorize="isAuthenticated()">
+              <a class="nav-link" href="/main">Message</a>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <div  sec:authorize="isAuthenticated()">
+              <a class="nav-link" href="/user/profile">Profile</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div  sec:authorize="!isAuthenticated()">
+              <a class="nav-link" th:href="@{/registr}">Registration</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div  sec:authorize="!isAuthenticated()">
+              <a class="nav-link" th:href="@{/login}">Sign In</a>
+            </div>
+          </li>
+        </ul>
+        <div class="d-flex position-absolute bottom-10 end-0 mx-1" sec:authorize="isAuthenticated()">
+          <p class="mx-2" th:text="${user}"></p>
+          <form th:action="@{/logout}" th:method="post">
+            <button class="btn btn-primary sm-1" type="submit">Sign Out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+</body>
+</html>
