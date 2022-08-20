@@ -23,7 +23,7 @@
                             <p style="color: darkred" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
                         </div>
                         <div class="form-group mt-1">
-                            <input type="text" class="form-control"  name="tag" placeholder="Tag"/>
+                            <input type="text" class="form-control" name="tag" placeholder="Tag"/>
                             <p style="color: darkred" th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}"></p>
                         </div>
                         <div class="form-group mt-1">
@@ -52,9 +52,9 @@
                     <td th:text="${message.dataTime}"></td>
                     <strong><td th:text="${user}"></td></strong>
                 </div>
-                <div class="form-group mt-1">
+                <div class="form-group mt-1 ">
                     <button class="btn btn-primary "><a style="color: azure" th:href="@{/message/{id}/edit(id=${message.getId()})}">Edit</a></button>
-                    <a class="d-flex position-absolute" th:href="@{/message/{id}/delete(id=${message.getId()})}"> <i class="fa-solid fa-trash"></i></a>
+                    <a  class="position-absolute bottom-1 end-0 me-3" th:href="@{/message/{id}/delete(id=${message.getId()})}"> <i class="fa-solid fa-trash"></i></a>
                 </div>
             </div>
         </div>

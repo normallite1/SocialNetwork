@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Message edit</title>
+</head>
+<div th:insert="~{head :: head}"></div>
+<body>
+<div class="container mt-2">
+<h1 > Edit your message!</h1>
+</div>
+<form th:action="@{/message/{id}/edit(id=${message.getId()})}" method="POST" th:object="${message}" enctype="multipart/form-data">
+    <div class="container mt-2">
+        <div class="form-group mt-1">
+            <input type="text" class="form-control" name="message" placeholder="Text" th:field="*{message}"/>
+            <p style="color: darkred" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+        </div>
+        <div class="form-group mt-1">
+            <input type="text" class="form-control"  name="tag" placeholder="Tag" th:field="*{tag}"/>
+            <p style="color: darkred" th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}"></p>
+        </div>
+        <div class="form-group mt-1">
+            <input type="file" class="form-control"  name="file" />
+        </div>
+        <div class="form-group mt-1">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

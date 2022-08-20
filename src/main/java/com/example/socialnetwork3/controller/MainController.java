@@ -3,7 +3,6 @@ package com.example.socialnetwork3.controller;
 import com.example.socialnetwork3.model.Message;
 import com.example.socialnetwork3.model.User;
 import com.example.socialnetwork3.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +20,11 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
+    private final MessageService messageService;
 
-    @Autowired
-    public MessageService messageService;
+    private MainController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @GetMapping("/")
     public String getLogin(@AuthenticationPrincipal User user, Model model){
@@ -56,6 +57,7 @@ public class MainController {
 
         return "redirect:/main";
     }
+
 
 
 }

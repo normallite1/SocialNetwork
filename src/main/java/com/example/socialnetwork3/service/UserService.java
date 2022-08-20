@@ -39,13 +39,13 @@ public class UserService implements UserDetailsService {
         if(userFromDB != null){
             return false;
         }
-        User user1 = new User(user.getUsername(), user.getPassword(), false, user.getEmail(), Collections.singleton(Roles.USER));
-        user1.setActivatoreCode(UUID.randomUUID().toString());
-        user1.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Roles.USER));
+        user.setActivatoreCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepos.save(user1);
+        userRepos.save(user);
 
-        sendMessage(user1);
+        sendMessage(user);
 
         return true;
     }
@@ -89,14 +89,10 @@ public class UserService implements UserDetailsService {
             if(!StringUtils.isEmpty(email)) {
                 user.setActivatoreCode(UUID.randomUUID().toString());
             }
-        }
-        if(isEmailChanged) {
             user.setActive(false);
             sendMessage(user);
             userRepos.save(user);
-        } else {
-            return false;
-        }
+        } else return false;
 
         return true;
     }

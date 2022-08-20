@@ -39,7 +39,6 @@ public class MessageService {
             message.setFilename(resultFileName);
         }
         message.setUser(user);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MMM-dd HH:mm:ss", Locale.UK);
         LocalDateTime time = LocalDateTime.now();
         message.setDataTime(formatter.format(time));
@@ -53,5 +52,28 @@ public class MessageService {
 
     public void deleteMessage(Long id) {
         messageRepo.deleteById(id);
+    }
+
+    public Message getOneMessage(Long id) {
+        return messageRepo.getReferenceById(id);
+    }
+    public void updateMessage(Long id, Message newMessage, MultipartFile file) throws IOException {
+        Message message = getOneMessage(id);
+        if(file != null && !file.getOriginalFilename().isEmpty()){
+            File uploadDir = new File(uploadPath);
+            if(!uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+            message.setFilename(resultFileName);
+        }
+        message.setMessage(newMessage.getMessage());
+        message.setTag(newMessage.getTag());
+        message.setDataTime(newMessage.getDataTime());
+        messageRepo.save(message);
     }
 }
