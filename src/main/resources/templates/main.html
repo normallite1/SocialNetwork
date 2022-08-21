@@ -19,8 +19,8 @@
                 <form th:action="@{/main}" method="POST" th:object="${message}" enctype="multipart/form-data">
                     <div class="container">
                         <div class="form-group mt-1">
-                            <input type="text" class="form-control" name="message" placeholder="Text"/>
-                            <p style="color: darkred" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+                            <input type="text" class="form-control" name="text" placeholder="Text"/>
+                            <p style="color: darkred" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
                         </div>
                         <div class="form-group mt-1">
                             <input type="text" class="form-control" name="tag" placeholder="Tag"/>
@@ -39,13 +39,13 @@
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-        <div th:each="message :${messages}" class="card mx-2"  style="width: 20rem;">
+        <div th:each="message :${messages}" class="card mx-2" style="width: 21rem;">
             <div class="col mt-2 my-1">
                 <div class="m-2">
                     <td th:if="${message.filename}">
                         <img class="card-img-top" th:src="@{/img/{file}(file=${message.filename})}">
                     </td>
-                    <td th:text="${message.message}"></td>
+                    <td th:text="${message.text}"></td>
                     <td th:text="${message.tag}"></td>
                 </div>
                 <div class="card-foter text-muted m-2">

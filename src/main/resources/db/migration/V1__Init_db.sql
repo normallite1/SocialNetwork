@@ -13,7 +13,7 @@ create table messages (
                          id int8 not null,
                          filename varchar(255),
                          data_time varchar(255),
-                         message varchar(255),
+                         text varchar(255),
                          tag varchar(30),
                          user_id int8,
                          primary key (id));

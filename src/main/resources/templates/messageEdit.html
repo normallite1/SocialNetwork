@@ -17,8 +17,8 @@
 <form th:action="@{/message/{id}/edit(id=${message.getId()})}" method="POST" th:object="${message}" enctype="multipart/form-data">
     <div class="container mt-2">
         <div class="form-group mt-1">
-            <input type="text" class="form-control" name="message" placeholder="Text" th:field="*{message}"/>
-            <p style="color: darkred" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
+            <input type="text" class="form-control" name="text" placeholder="Text" th:field="*{text}"/>
+            <p style="color: darkred" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
         </div>
         <div class="form-group mt-1">
             <input type="text" class="form-control"  name="tag" placeholder="Tag" th:field="*{tag}"/>

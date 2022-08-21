@@ -4,9 +4,6 @@ import com.example.socialnetwork3.model.Message;
 import com.example.socialnetwork3.repos.MessageRepo;
 import com.example.socialnetwork3.service.MessageService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Service
 public class MessageContService {
@@ -28,7 +25,4 @@ public class MessageContService {
         messageRepo.deleteById(id);
     }
 
-    public void updateMessage(Long id, Message message, MultipartFile file) throws IOException {
-       messageService.updateMessage(id,message, file);
-    }
 }

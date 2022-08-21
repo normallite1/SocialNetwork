@@ -13,7 +13,7 @@ public class Message {
 
     @NotEmpty(message = "Text should not be empty")
     @Size(min=2, max=255, message = "Text should be between 2 and 255 char")
-    private String message;
+    private String text;
     @NotEmpty(message = "Tag should not be empty")
     @Size(min=2, max=30, message = "Tag should be between 2 and 30 char")
     private String tag;
@@ -25,9 +25,9 @@ public class Message {
 
     private String filename;
 
-    public Message( String message, String tag, String dataTime, User user) {
+    public Message(String text, String tag, String dataTime, User user) {
 
-        this.message = message;
+        this.text = text;
         this.tag = tag;
         this.dataTime = dataTime;
         this.user = user;
@@ -52,12 +52,12 @@ public class Message {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getTag() {

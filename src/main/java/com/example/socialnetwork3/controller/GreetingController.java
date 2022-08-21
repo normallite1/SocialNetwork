@@ -18,11 +18,11 @@ import java.io.IOException;
 
 
 @Controller
-public class MainController {
+public class GreetingController {
 
     private final MessageService messageService;
 
-    private MainController(MessageService messageService) {
+    private GreetingController(MessageService messageService) {
         this.messageService = messageService;
     }
 
@@ -43,17 +43,20 @@ public class MainController {
         return "main";
     }
     @PostMapping("/main")
-    public String createPost(@AuthenticationPrincipal User user,
+    public String createPost(@RequestParam("file") MultipartFile file,
+                             @RequestParam("text") String text,
+                             @RequestParam("tag") String tag,
+                             @AuthenticationPrincipal User user,
                              @ModelAttribute("message") @Valid Message message,
                              BindingResult bindingResult,
-                             @RequestParam("file") MultipartFile file,
+
                              Model model) throws IOException {
         if(bindingResult.hasErrors()) {
             model.addAttribute("messages", messageService.getAllMessages(user));
             return "main";
         }
 
-        messageService.createMesssge(message, user,file);
+        messageService.createMesssge(text,tag, user,file);
 
         return "redirect:/main";
     }
