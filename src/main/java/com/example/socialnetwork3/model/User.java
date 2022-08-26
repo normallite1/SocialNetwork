@@ -4,8 +4,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +37,22 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscription",
+            joinColumns =  { @JoinColumn (name="channel_id") },
+            inverseJoinColumns = { @JoinColumn(name = "subscriber_id")}
+    )
+    private Set<User> subscribers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscription",
+            joinColumns =  { @JoinColumn (name="subscriber_id") },
+            inverseJoinColumns = { @JoinColumn(name = "channel_id")}
+    )
+    private Set<User> subscriptions = new HashSet<>();
 
     public User(String username, String password, boolean active, String email, Set<Roles> roles) {
         this.username = username;
@@ -138,6 +157,22 @@ public class User implements UserDetails {
 
     public void setActivatoreCode(String activatoreCode) {
         this.activatoreCode = activatoreCode;
+    }
+
+    public Set<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public Set<User> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<User> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }
 

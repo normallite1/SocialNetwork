@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="">
 
 <body>
-<div th:fragment="head" >
+<div th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid mx-1">
       <a class="navbar-brand" href="/">Social</a>
@@ -16,6 +16,11 @@
           <li class="nav-item">
             <div  sec:authorize="isAuthenticated()">
               <a class="nav-link" href="/main">Message</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div  sec:authorize="isAuthenticated()">
+              <a class="nav-link" th:href="@{/user/{id}(id=${userCurrent.getId()})}">User Account</a>
             </div>
           </li>
 
@@ -36,7 +41,7 @@
           </li>
         </ul>
         <div class="d-flex position-absolute bottom-10 end-0 mx-1" sec:authorize="isAuthenticated()">
-          <p class="mx-2" th:text="${user}"></p>
+          <p class="mx-2" th:text="${userCurrent.getUsername()}"></p>
           <form th:action="@{/logout}" th:method="post">
             <button class="btn btn-primary sm-1" type="submit">Sign Out</button>
           </form>

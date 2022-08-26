@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3ae469ce4a.js" crossorigin="anonymous"></script>
+    <title>User Info</title>
+</head>
+<body>
+<div th:insert="~{header :: header}"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Subscriptions</div>
+                    <div class="card-text">
+                        <a th:href="@{/user/subscriptions/{userChannel}(userChannel=${userChannel.getId()})}"><p th:text="${subscriptionsCount}"></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Subscribers</div>
+                    <div class="card-text">
+                        <a th:href="@{/user/subscribers/{userChannel}(userChannel=${userChannel.getId()})}"><p th:text="${subscribersCount}"></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+    <div th:each="message :${messages}" class="card mx-2" style="width: 21rem;">
+        <div class="col mt-2 my-1">
+            <div class="m-2">
+                <td th:if="${message.filename}">
+                    <img class="card-img-top" th:src="@{/img/{file}(file=${message.filename})}">
+                </td>
+                <td th:text="${message.text}"></td>
+                <td th:text="${message.tag}"></td>
+            </div>
+            <div class="card-foter text-muted m-2">
+                <td th:text="${message.dataTime}"></td>
+                <strong><a th:href="@{/user/{id}(id=${message.user.Id})}"><td th:text="${message.user.username}"></td></a></strong>
+            </div>
+            <div th:if="${message.user.getId() == userCurrent.getId()}">
+            <div class="form-group mt-1 ">
+                <button class="btn btn-primary "><a style="color: azure" th:href="@{/message/{id}/edit(id=${message.getId()})}">Edit</a></button>
+                <a  class="position-absolute bottom-1 end-0 me-3" th:href="@{/message/{id}/delete(id=${message.getId()})}"> <i class="fa-solid fa-trash"></i></a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+</body>
+</html>

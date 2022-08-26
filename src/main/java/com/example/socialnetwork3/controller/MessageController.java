@@ -1,8 +1,9 @@
 package com.example.socialnetwork3.controller;
 
-import com.example.socialnetwork3.controllerService.MessageContService;
 import com.example.socialnetwork3.model.Message;
+import com.example.socialnetwork3.model.User;
 import com.example.socialnetwork3.service.MessageService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,22 +17,24 @@ import java.io.IOException;
 @RequestMapping("/message")
 public class MessageController {
 
-    private final MessageContService messageContService;
+
     private final MessageService messageService;
 
-    public MessageController(MessageContService messageContService, MessageService messageService) {
-        this.messageContService = messageContService;
+    public MessageController( MessageService messageService) {
+
         this.messageService = messageService;
     }
 
     @GetMapping("/{id}/delete")
     public String deleteMessage(@PathVariable Long id){
-        messageContService.deleteOneMessage(id);
+        messageService.deleteMessage(id);
         return "redirect:/main";
     }
     @GetMapping("/{id}/edit")
-    public String editMessage(@PathVariable Long id, Model model){
-        model.addAttribute("message" , messageContService.getOneMessage(id));
+    public String editMessage(@AuthenticationPrincipal User userCurrent,
+                              @PathVariable Long id, Model model){
+        model.addAttribute("message" , messageService.getOneMessage(id));
+        model.addAttribute("userCurrent", userCurrent);
         return "messageEdit";
     }
     @PostMapping("/{id}/edit")

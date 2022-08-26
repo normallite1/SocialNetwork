@@ -1,28 +1,25 @@
 package com.example.socialnetwork3.controller;
 
 import com.example.socialnetwork3.model.User;
-import com.example.socialnetwork3.repos.UserRepos;
+import com.example.socialnetwork3.service.MessageService;
 import com.example.socialnetwork3.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    public final MessageService messageService;
+    private final UserService userService;
 
-    @Autowired
-    private UserRepos userRepos;
+    public UserController(UserService userService, MessageService messageService) {
+        this.userService = userService;
+        this.messageService = messageService;
+    }
 
-    @Autowired
-    private UserService userService;
-
-//    @GetMapping()
+    //    @GetMapping()
 //    public String getUserList(Model model){
 //        model.addAttribute("users", userRepos.findAll());
 //
@@ -44,21 +41,33 @@ public class UserController {
 //
 //        return "redirect:/user";
 //    }
+    @GetMapping("{id}")
+    public String getUser(@AuthenticationPrincipal User userCurrent,
+                          @PathVariable Long id, Model model){
+        User user = userService.getUser(id);
+
+        model.addAttribute("userChannel", user);
+        model.addAttribute("userCurrent", userCurrent);
+        model.addAttribute("messages", messageService.getAllMessagesUser(user));
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+       return "userInfo";
+    }
     @GetMapping("/profile")
-    public String getProfile(@AuthenticationPrincipal User user,
+    public String getProfile(@AuthenticationPrincipal User userCurrent,
                              Model model){
-        model.addAttribute("user", user.getUsername());
-        model.addAttribute("useru", user);
+
+        model.addAttribute("userCurrent", userCurrent);
 
 
         return "profile";
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@AuthenticationPrincipal User user,
+    public String updateProfile(@AuthenticationPrincipal User userCurrent,
                                 @RequestParam("email") String email,
                                 Model model){
-        if(userService.updateProfile(user, email)){
+        if(userService.updateProfile(userCurrent, email)){
             model.addAttribute("message", "Activate your profile, visit link send your email");
             return "login";
         } else {

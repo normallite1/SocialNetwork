@@ -96,4 +96,8 @@ public class UserService implements UserDetailsService {
 
         return true;
     }
+
+    public User getUser(Long id) {
+        return userRepos.getById(id);
+    }
 }

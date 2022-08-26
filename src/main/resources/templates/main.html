@@ -8,7 +8,7 @@
     <title>Main</title>
 </head>
 <body>
-<div th:insert="~{head :: head}"></div>
+<div th:insert="~{header :: header}"></div>
 <div class="container mt-5">
     <div class="container ">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -50,11 +50,13 @@
                 </div>
                 <div class="card-foter text-muted m-2">
                     <td th:text="${message.dataTime}"></td>
-                    <strong><td th:text="${user}"></td></strong>
+                    <strong><a th:href="@{/user/{id}(id=${message.user.Id})}"><td th:text="${message.user.username}"></td></a></strong>
                 </div>
-                <div class="form-group mt-1 ">
-                    <button class="btn btn-primary "><a style="color: azure" th:href="@{/message/{id}/edit(id=${message.getId()})}">Edit</a></button>
-                    <a  class="position-absolute bottom-1 end-0 me-3" th:href="@{/message/{id}/delete(id=${message.getId()})}"> <i class="fa-solid fa-trash"></i></a>
+                <div th:if="${message.user.getId() == userCurrent.getId()}">
+                    <div class="form-group mt-1 ">
+                        <button class="btn btn-primary "><a style="color: azure" th:href="@{/message/{id}/edit(id=${message.getId()})}">Edit</a></button>
+                        <a  class="position-absolute bottom-1 end-0 me-3" th:href="@{/message/{id}/delete(id=${message.getId()})}"> <i class="fa-solid fa-trash"></i></a>
+                    </div>
                 </div>
             </div>
         </div>

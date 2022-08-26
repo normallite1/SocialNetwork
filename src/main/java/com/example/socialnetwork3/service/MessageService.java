@@ -11,9 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -51,7 +49,7 @@ public class MessageService {
         messageRepo.save(message);
     }
 
-    public Set<Message> getAllMessages(User user){
+    public Set<Message> getAllMessagesUser(User user){
         return messageRepo.findMessageWhereUser(user);
     }
 
@@ -60,7 +58,7 @@ public class MessageService {
     }
 
     public Message getOneMessage(Long id) {
-        return messageRepo.getReferenceById(id);
+        return messageRepo.getById(id);
     }
     public void updateMessage(Long id, String text, String tag, MultipartFile file) throws IOException {
         Message message = getOneMessage(id);
@@ -79,5 +77,9 @@ public class MessageService {
         message.setText(text);
         message.setTag(tag);
         messageRepo.save(message);
+    }
+
+    public List<Message> getAllMessages() {
+        return messageRepo.findAll();
     }
 }

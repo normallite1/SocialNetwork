@@ -27,18 +27,18 @@ public class GreetingController {
     }
 
     @GetMapping("/")
-    public String getLogin(@AuthenticationPrincipal User user, Model model){
-        model.addAttribute("user", user.getUsername());
+    public String getLogin(@AuthenticationPrincipal User userCurrent, Model model){
+        model.addAttribute("userCurrent", userCurrent);
 
         return "hello";
     }
 
     @GetMapping("/main")
-    public String getMain(@AuthenticationPrincipal User user,
+    public String getMain(@AuthenticationPrincipal User userCurrent,
                           @ModelAttribute Message message,
                           Model model){
-        model.addAttribute("messages", messageService.getAllMessages(user));
-        model.addAttribute("user", user.getUsername());
+        model.addAttribute("messages", messageService.getAllMessages());
+        model.addAttribute("userCurrent", userCurrent);
 
         return "main";
     }
@@ -46,17 +46,17 @@ public class GreetingController {
     public String createPost(@RequestParam("file") MultipartFile file,
                              @RequestParam("text") String text,
                              @RequestParam("tag") String tag,
-                             @AuthenticationPrincipal User user,
+                             @AuthenticationPrincipal User userCurrent,
                              @ModelAttribute("message") @Valid Message message,
                              BindingResult bindingResult,
 
                              Model model) throws IOException {
         if(bindingResult.hasErrors()) {
-            model.addAttribute("messages", messageService.getAllMessages(user));
+            model.addAttribute("messages", messageService.getAllMessages());
             return "main";
         }
 
-        messageService.createMesssge(text,tag, user,file);
+        messageService.createMesssge(text,tag, userCurrent,file);
 
         return "redirect:/main";
     }

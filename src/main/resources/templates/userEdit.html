@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>User editor</title>
 </head>
-<div th:insert="~{head :: head}"></div>
+<div th:insert="~{header :: header}"></div>
 <body>
 <div class="container mt-5">
 <form th:method="POST" th:action="@{/user/{id}/edit(id=${user.getId()})}" th:object="${user}">
