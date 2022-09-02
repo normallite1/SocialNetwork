@@ -38,7 +38,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscription",
             joinColumns =  { @JoinColumn (name="channel_id") },
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     )
     private Set<User> subscribers = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscription",
             joinColumns =  { @JoinColumn (name="subscriber_id") },
