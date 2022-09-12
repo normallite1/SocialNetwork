@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -55,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 //    @Bean
 //    public CommandLineRunner demo(UserRepos myUserRepository){
-//        User admin = new User("admin","1",true,  Collections.singleton(ADMIN));
-//        User user = new User("user","1",true,  Collections.singleton(USER));
+//        User admin = new User("admin","1",true,  Collections.singleton(Roles.ADMIN));
+//        User user = new User("user","1",true,  Collections.singleton(Roles.USER));
 //
 //
 //        return string -> {

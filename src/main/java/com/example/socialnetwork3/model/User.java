@@ -29,10 +29,8 @@ public class User implements UserDetails {
     @Email(message = "Email should be valid")
     private String email;
     private String activatoreCode;
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Message> messageList;
-
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -54,22 +52,15 @@ public class User implements UserDetails {
     )
     private Set<User> subscriptions = new HashSet<>();
 
-    public User(String username, String password, boolean active, String email, Set<Roles> roles) {
+    public User(String username, String password, boolean active,  Set<Roles> roles) {
         this.username = username;
         this.password = password;
         this.active = active;
-        this.email = email;
         this.roles = roles;
     }
 
     public User() {
 
-    }
-    public void addMessage(Message message) {
-        if (!messageList.contains(message)) {
-            messageList.add(message);
-            message.setUser(this);
-        }
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
